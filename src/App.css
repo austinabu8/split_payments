@@ -498,17 +498,19 @@ body {
 }
 
 .modal input, .modal select {
-  width: 100%;
+width: 100%;
   padding: 1rem;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
   font-size: 1rem;
   transition: all 0.3s ease;
   background: #fafafa;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
 }
 
 .modal input:focus, .modal select:focus {
-  outline: none;
+ outline: none;
   border-color: #4f46e5;
   background: white;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
