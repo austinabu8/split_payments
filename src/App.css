@@ -498,7 +498,7 @@ body {
 }
 
 .modal input, .modal select {
-width: 100%;
+  width: 100%;
   padding: 1rem;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
@@ -510,7 +510,7 @@ width: 100%;
 }
 
 .modal input:focus, .modal select:focus {
- outline: none;
+  outline: none;
   border-color: #4f46e5;
   background: white;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
@@ -641,7 +641,7 @@ width: 100%;
 }
 
 /* Desktop Optimizations */
-@media (min-width: 1480px) {
+@media (min-width: 1024px) {
   .main-content {
     padding: 3rem;
   }
@@ -689,7 +689,7 @@ width: 100%;
 
 @media (min-width: 1200px) {
   .main-content {
-    max-width: 1800px;
+    max-width: 1700px;
   }
   
   .app-grid {
@@ -727,7 +727,6 @@ width: 100%;
   
   .section-header h2 {
     font-size: 1.25rem;
-   
     text-align: center;
   }
   
@@ -763,6 +762,24 @@ width: 100%;
   .modal {
     margin: 1rem;
     padding: 1.5rem;
+  }
+  
+  /* Mobile Input Fixes */
+  .modal input, .modal select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 1.2rem;
+    border-radius: 8px;
+    -webkit-appearance: none;
+    -webkit-border-radius: 8px;
+  }
+  
+  .modal input:focus, .modal select:focus {
+    transform: none; /* Prevent any transforms that might cause issues */
+  }
+  
+  .modal input[type="text"], 
+  .modal input[type="number"] {
+    -webkit-appearance: none;
   }
   
   .modal-actions {
@@ -827,5 +844,25 @@ width: 100%;
   .settlement-from, .settlement-to, .settlement-amount {
     padding: 0.5rem;
     font-size: 0.9rem;
+  }
+  
+  .modal input, .modal select {
+    font-size: 16px !important;
+  }
+}
+
+/* Additional Mobile Input Fixes */
+@media screen and (max-width: 768px) {
+  input[type="text"], 
+  input[type="number"], 
+  select {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    -webkit-border-radius: 8px;
+  }
+  
+  input:focus {
+    -webkit-transform: none;
+    transform: none;
   }
 }

@@ -301,73 +301,127 @@ function App() {
         </div>
       </main>
 
-      {/* Add Person Modal */}
-     {/* Add Person Modal - FIXED VERSION */}
-{showAddPerson && (
-  <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && setShowAddPerson(false)}>
-    <div className="modal">
-      <h3>Add New Person</h3>
-      <input
-        type="text"
-        placeholder="Enter person's name"
-        value={newPersonName}
-        onChange={(e) => {
-          console.log('Input change:', e.target.value); // Debug line
-          setNewPersonName(e.target.value);
-        }}
-        onInput={(e) => setNewPersonName(e.target.value)} // Add this line
-        onKeyPress={(e) => e.key === 'Enter' && addPerson()}
-        autoFocus
-        autoComplete="off"
-        autoCorrect="off"
-        autoCapitalize="off"
-        spellCheck="false"
-      />
-      <div className="modal-actions">
-        <button className="btn btn-secondary" onClick={() => setShowAddPerson(false)}>
-          Cancel
-        </button>
-        <button className="btn btn-primary" onClick={addPerson} disabled={!newPersonName.trim()}>
-          Add Person
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+      {/* Add Person Modal - FIXED VERSION */}
+      {showAddPerson && (
+        <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && setShowAddPerson(false)}>
+          <div className="modal">
+            <h3>Add New Person</h3>
+            <input
+              type="text"
+              placeholder="Enter person's name"
+              value={newPersonName}
+              onChange={(e) => setNewPersonName(e.target.value)}
+              onInput={(e) => setNewPersonName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && addPerson()}
+              autoFocus
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
+            />
+            <div className="modal-actions">
+              <button className="btn btn-secondary" onClick={() => setShowAddPerson(false)}>
+                Cancel
+              </button>
+              <button className="btn btn-primary" onClick={addPerson} disabled={!newPersonName.trim()}>
+                Add Person
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
+      {/* Add Expense Modal - COMPLETE FIXED VERSION */}
+      {showAddExpense && (
+        <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && setShowAddExpense(false)}>
+          <div className="modal large-modal">
+            <h3>Add New Expense</h3>
+            
+            <div className="form-group">
+              <label>What did you pay for?</label>
+              <input
+                type="text"
+                placeholder="e.g., Dinner at restaurant"
+                value={newExpense.description}
+                onChange={(e) => setNewExpense({...newExpense, description: e.target.value})}
+                onInput={(e) => setNewExpense({...newExpense, description: e.target.value})}
+                autoFocus
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Amount (₹)</label>
+              <input
+                type="number"
+                placeholder="0.00"
+                value={newExpense.amount}
+                onChange={(e) => setNewExpense({...newExpense, amount: e.target.value})}
+                onInput={(e) => setNewExpense({...newExpense, amount: e.target.value})}
+                min="0"
+                step="0.01"
+                inputMode="decimal"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Who paid?</label>
+              <select 
+                value={newExpense.paidBy}
+                onChange={(e) => setNewExpense({...newExpense, paidBy: e.target.value})}
+                onInput={(e) => setNewExpense({...newExpense, paidBy: e.target.value})}
+              >
+                <option value="">Select person</option>
+                {people.map(person => (
+                  <option key={person.id} value={person.id}>{person.name}</option>
+                ))}
+              </select>
+            </div>
 
-      {/* Add Expense Modal */}
-      {/* In the Add Expense Modal, update all inputs */}
-<div className="form-group">
-  <label>What did you pay for?</label>
-  <input
-    type="text"
-    placeholder="e.g., Dinner at restaurant"
-    value={newExpense.description}
-    onChange={(e) => setNewExpense({...newExpense, description: e.target.value})}
-    onInput={(e) => setNewExpense({...newExpense, description: e.target.value})}
-    autoComplete="off"
-    autoCorrect="off"
-    autoCapitalize="off"
-    spellCheck="false"
-    autoFocus
-  />
-</div>
+            <div className="form-group">
+              <div className="split-header">
+                <label>Split between:</label>
+                <button 
+                  type="button"
+                  className="btn btn-small btn-outline"
+                  onClick={selectAllPeople}
+                >
+                  Select All
+                </button>
+              </div>
+              <div className="people-checkboxes">
+                {people.map(person => (
+                  <label key={person.id} className="checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={newExpense.splitBetween.includes(person.id)}
+                      onChange={() => togglePersonInSplit(person.id)}
+                    />
+                    <span className="checkbox-custom"></span>
+                    {person.name}
+                  </label>
+                ))}
+              </div>
+            </div>
 
-<div className="form-group">
-  <label>Amount (₹)</label>
-  <input
-    type="number"
-    placeholder="0.00"
-    value={newExpense.amount}
-    onChange={(e) => setNewExpense({...newExpense, amount: e.target.value})}
-    onInput={(e) => setNewExpense({...newExpense, amount: e.target.value})}
-    min="0"
-    step="0.01"
-    inputMode="decimal"
-  />
-</div>
-
+            <div className="modal-actions">
+              <button className="btn btn-secondary" onClick={() => setShowAddExpense(false)}>
+                Cancel
+              </button>
+              <button 
+                className="btn btn-primary" 
+                onClick={addExpense}
+                disabled={!newExpense.description || !newExpense.amount || !newExpense.paidBy || newExpense.splitBetween.length === 0}
+              >
+                Add Expense
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer className="footer">
         <div className="footer-content">
