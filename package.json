@@ -1,9 +1,8 @@
 {
   "name": "split_payment",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
-   "homepage": "https://austinabu8/split_payment",
+   "homepage": "https://austinabu8/split_payments",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
